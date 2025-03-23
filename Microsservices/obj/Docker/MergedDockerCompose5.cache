@@ -1,0 +1,38 @@
+name: dockercompose7607697377251975825
+services:
+  catalog.api:
+    build:
+      context: C:\Users\vieira\source\repos\Microsservices
+      dockerfile: Catalog.API/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+    image: catalogapi
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+  catalogdb:
+    container_name: catalogdb
+    image: mongo
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 27017
+        published: "27017"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: volume
+        source: mongo_data
+        target: /data/db
+        volume: {}
+networks:
+  default:
+    name: dockercompose7607697377251975825_default
+volumes:
+  mongo_data:
+    name: dockercompose7607697377251975825_mongo_data
